@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html class="no-js" lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Kalite Sertifikalarımız | Nart Gaz - Endüstriyel Çözümler</title>
+    <meta name="description" content="Nart Gaz ASME, ISO ve TSE uluslararası endüstriyel doğalgaz imalat ve kalite sertifikaları." />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png" />
+
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/css/lineicons.css" />
+    <link rel="stylesheet" href="assets/css/animate.css" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+
+    <style>
+      /* Sertifika Kart Düzeni */
+      .nart-cert-card {
+        background: #fff;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(16, 36, 71, 0.04);
+        border: 1px solid #f0f4f8;
+        transition: all 0.4s cubic-bezier(0.2, 0.6, 0.2, 1);
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+      }
+      .nart-cert-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 25px 50px rgba(16, 36, 71, 0.12);
+      }
+
+      /* Medya Kapsayıcı ve Mavi Kurumsal Filtre Layer'ı */
+      .cert-media-box {
+        position: relative;
+        overflow: hidden;
+        background: #111a2e;
+        height: 320px; /* Belge okunurluğu için yükseklik optimize edildi */
+        width: 100%;
+      }
+
+      /* Belge önü şeffaf mavi kurumsal filtre (Karta gelindiğinde parlar) */
+      .cert-media-box::after {
+        content: "";
+        position: absolute;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: linear-gradient(135deg, rgba(22, 36, 71, 0.45) 0%, rgba(66, 173, 240, 0.2) 100%);
+        z-index: 3;
+        pointer-events: none;
+        transition: all 0.4s ease;
+      }
+      .nart-cert-card:hover .cert-media-box::after {
+        background: linear-gradient(135deg, rgba(22, 36, 71, 0.15) 0%, rgba(66, 173, 240, 0.02) 100%);
+      }
+
+      /* CANLI ÖN İZLEME: PDF'i doğrudan döküman olarak gömen iframe yapısı */
+      .cert-pdf-iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+        position: relative;
+        z-index: 1;
+        pointer-events: none; /* Kart tıklamalarını engellememesi için */
+      }
+
+      /* Üst Teknik HUD Rozeti */
+      .cert-hud-badge {
+        position: absolute;
+        top: 15px; right: 15px;
+        background: rgba(22, 36, 71, 0.85);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border: 1px solid rgba(255,255,255,0.1);
+        padding: 4px 12px;
+        border-radius: 6px;
+        color: #42adf0;
+        font-family: monospace;
+        font-size: 11px;
+        font-weight: 700;
+        z-index: 10;
+      }
+
+      /* Kart Metin Alanları */
+      .nart-cert-info {
+        padding: 25px;
+        text-align: center;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .nart-cert-info h4 { font-size: 17px; color: #162447; margin-bottom: 12px; font-weight: 700; min-height: 42px; }
+
+      /* Dinamik Filtre Navigasyon Butonları */
+      .nart-filter-nav { display: flex; justify-content: center; gap: 10px; margin-bottom: 50px; flex-wrap: wrap; }
+      .nart-filter-btn { background: #fff; border: 2px solid #e2e8f0; color: #162447; padding: 10px 24px; font-size: 15px; font-weight: 700; border-radius: 50px; transition: all 0.3s ease; }
+      .nart-filter-btn.active, .nart-filter-btn:hover { background: #162447; border-color: #162447; color: #fff; }
+
+      .filter-item { transition: opacity 0.4s ease, transform 0.4s ease; }
+    </style>
+  </head>
+  <body>
+
+    <div class="preloader"><div class="loader"><div class="spinner"><div class="spinner-container"><div class="spinner-rotator"><div class="spinner-left"><div class="spinner-circle"></div></div><div class="spinner-right"><div class="spinner-circle"></div></div></div></div></div></div></div>
+
+    <div id="nart-header"></div>
+    <!-- ======== Hero Bölümü ======== -->
+    <section class="hero-section" style="padding: 180px 0 80px; background-color: #162447;">
+      <div class="container">
+        <div class="row align-items-center">
+          <!-- Sol Taraf: Başlık ve Açıklama (col-md-6 genişliği col-md-8 yapıldı) -->
+          <div class="col-md-8">
+            <div class="hero-content mb-0">
+              <h1 class="wow fadeInUp" data-wow-delay=".4s" data-en="Our Certificates" style="font-size: 48px; margin-bottom: 15px;">Sertifikalarımız</h1>
+              <p class="wow fadeInUp" data-wow-delay=".6s" data-en="National and international quality certificates certifying Nart Gaz industrial production assurance." style="color: rgba(255,255,255,0.7); margin-bottom: 0;">Nart Gaz endüstriyel üretim güvencesini tescilleyen ulusal ve uluslararası kalite belgeleri.</p>
+            </div>
+          </div>
+
+          <!-- 🌟 SAĞ TARAF: Yeni Dil Duyarlı Breadcrumb Alanı -->
+          <div class="col-md-4 text-md-end mt-4 mt-md-0">
+            <nav aria-label="breadcrumb" class="wow fadeInUp" data-wow-delay=".5s">
+              <ol class="breadcrumb justify-content-md-end mb-0" style="background: transparent; padding: 0;">
+                <li class="breadcrumb-item"><a href="index.html" data-en="Home" style="color: rgba(255,255,255,0.6);">Anasayfa</a></li>
+                <li class="breadcrumb-item active text-white" aria-current="page" data-en="Certificates">Sertifikalar</li>
+              </ol>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="product-section pt-120 pb-120">
+      <div class="container">
+
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="nart-filter-nav">
+              <button class="nart-filter-btn active" data-filter="all" data-en="All Documents">Tüm Belgeler</button>
+              <button class="nart-filter-btn" data-filter="global" data-en="International Approvals">Uluslararası Onaylar</button>
+              <button class="nart-filter-btn" data-filter="national" data-en="National Standards">Ulusal Standartlar</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="row g-4" id="nart-certs-grid">
+
+          <div class="col-lg-4 col-md-6 filter-item global">
+            <div class="nart-cert-card">
+              <div class="cert-media-box">
+                <span class="cert-hud-badge">ASME / 2025</span>
+                <iframe src="assets/img/certificates/ASME Section VII Division-1 2025 Belgemiz.pdf#toolbar=0&navpanes=0&scrollbar=0" class="cert-pdf-iframe"></iframe>
+              </div>
+              <div class="nart-cert-info">
+                <h4>ASME Section VII Division-1 2025</h4>
+                <a href="assets/img/certificates/ASME%20Section%20VII%20Division-1%202025%20Belgemiz.pdf" target="_blank" class="main-btn btn-hover w-100 py-2 text-center" data-en="<i class='lni lni-eye' style='margin-right: 6px;'></i> View Document" style="font-size: 13px; border-radius: 8px;"><i class="lni lni-eye" style="margin-right: 6px;"></i> Belgeyi Görüntüle</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 filter-item global">
+            <div class="nart-cert-card">
+              <div class="cert-media-box">
+                <span class="cert-hud-badge">ISO 9001</span>
+                <iframe src="assets/img/certificates/ISO 9001 Belgemiz.pdf#toolbar=0&navpanes=0&scrollbar=0" class="cert-pdf-iframe"></iframe>
+              </div>
+              <div class="nart-cert-info">
+                <h4 data-en="ISO 9001 Quality Management Certificate">ISO 9001 Kalite Yönetim Belgesi</h4>
+                <a href="assets/img/certificates/ISO%209001%20Belgemiz.pdf" target="_blank" class="main-btn btn-hover w-100 py-2 text-center" data-en="<i class='lni lni-eye' style='margin-right: 6px;'></i> View Document" style="font-size: 13px; border-radius: 8px;"><i class="lni lni-eye" style="margin-right: 6px;"></i> Belgeyi Görüntüle</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 filter-item global">
+            <div class="nart-cert-card">
+              <div class="cert-media-box">
+                <span class="cert-hud-badge">ISO 14001</span>
+                <iframe src="assets/img/certificates/ISO 14001 Belgemiz.pdf#toolbar=0&navpanes=0&scrollbar=0" class="cert-pdf-iframe"></iframe>
+              </div>
+              <div class="nart-cert-info">
+                <h4 data-en="ISO 14001 Environmental Management Certificate">ISO 14001 Çevre Yönetim Belgesi</h4>
+                <a href="assets/img/certificates/ISO%2014001%20Belgemiz.pdf" target="_blank" class="main-btn btn-hover w-100 py-2 text-center" data-en="<i class='lni lni-eye' style='margin-right: 6px;'></i> View Document" style="font-size: 13px; border-radius: 8px;"><i class="lni lni-eye" style="margin-right: 6px;"></i> Belgeyi Görüntüle</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 filter-item global">
+            <div class="nart-cert-card">
+              <div class="cert-media-box">
+                <span class="cert-hud-badge">ISO 45001</span>
+                <iframe src="assets/img/certificates/ISO 45001 Belgemiz.pdf#toolbar=0&navpanes=0&scrollbar=0" class="cert-pdf-iframe"></iframe>
+              </div>
+              <div class="nart-cert-info">
+                <h4 data-en="ISO 45001 Occupational Health and Safety">ISO 45001 İş Sağlığı ve Güvenliği</h4>
+                <a href="assets/img/certificates/ISO%2045001%20Belgemiz.pdf" target="_blank" class="main-btn btn-hover w-100 py-2 text-center" data-en="<i class='lni lni-eye' style='margin-right: 6px;'></i> View Document" style="font-size: 13px; border-radius: 8px;"><i class="lni lni-eye" style="margin-right: 6px;"></i> Belgeyi Görüntüle</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 filter-item national">
+            <div class="nart-cert-card">
+              <div class="cert-media-box">
+                <span class="cert-hud-badge">TSE 12186</span>
+                <iframe src="assets/img/certificates/TSE 12186 Belgemiz.pdf#toolbar=0&navpanes=0&scrollbar=0" class="cert-pdf-iframe"></iframe>
+              </div>
+              <div class="nart-cert-info">
+                <h4 data-en="TSE 12186 Standard Compliance Certificate">TSE 12186 Standart Uygunluk Belgesi</h4>
+                <a href="assets/img/certificates/TSE%2012186%20Belgemiz.pdf" target="_blank" class="main-btn btn-hover w-100 py-2 text-center" data-en="<i class='lni lni-eye' style='margin-right: 6px;'></i> View Document" style="font-size: 13px; border-radius: 8px;"><i class="lni lni-eye" style="margin-right: 6px;"></i> Belgeyi Görüntüle</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <div id="nart-footer"></div>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/wow.min.js"></script>
+    <script src="assets/js/main.js"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        // Akıllı Döküman Filtreleme Motoru (Sertifika butonlarının çalışması için şarttır)
+        const filterButtons = document.querySelectorAll(".nart-filter-btn");
+        const filterItems = document.querySelectorAll(".filter-item");
+
+        filterButtons.forEach(btn => {
+          btn.addEventListener("click", function() {
+            filterButtons.forEach(b => b.classList.remove("active"));
+            this.classList.add("active");
+
+            const targetFilter = this.getAttribute("data-filter");
+
+            filterItems.forEach(item => {
+              if (targetFilter === "all" || item.classList.contains(targetFilter)) {
+                item.style.display = "block";
+                setTimeout(() => { item.style.opacity = "1"; item.style.transform = "scale(1)"; }, 50);
+              } else {
+                item.style.opacity = "0";
+                item.style.transform = "scale(0.92)";
+                setTimeout(() => { item.style.display = "none"; }, 400);
+              }
+            });
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

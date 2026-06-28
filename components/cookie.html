@@ -1,0 +1,71 @@
+<div id="çerez-uyarisi-banner" class="container-fluid py-3 shadow-lg" style="display: none; position: fixed; bottom: 0; left: 0; right: 0; background-color: white; border-top: 1px solid #ddd; z-index: 10000; font-family: sans-serif;">
+    <div class="container d-flex flex-column flex-md-row align-items-center justify-content-between text-center text-md-start">
+        <div class="mb-3 mb-md-0 pe-md-4">
+            <h5 class="mb-1 text-dark" style="font-weight: 700;" data-en="Cookie Usage">Çerez Kullanımı</h5>
+            <p class="mb-0 text-muted" style="font-size: 0.9rem;" data-en="We use cookies to ensure that we give you the best experience on our website. Cookies provide site functionality and analyze traffic. You can review our <a href='privacy.html' class='text-primary text-decoration-underline'>Privacy Policy</a>.">Web sitemizde size en iyi deneyimi sunabilmek için çerezler kullanıyoruz. Çerezler, site işlevselliğini sağlar ve trafik analizi yapar. <a href="privacy.html" class="text-primary text-decoration-underline">Gizlilik Politikamızı</a> inceleyebilirsiniz.</p>
+        </div>
+        <div class="d-flex flex-column flex-md-row gap-2 mt-2 mt-md-0">
+            <button onclick="acceptAllCookiesShort()" class="btn btn-sm btn-primary px-3 py-2 text-white" style="background-color: #42adf0; border-color: #42adf0; font-weight: 600; border-radius: 5px;" data-en="Accept All">Tümünü Kabul Et</button>
+            <button onclick="acceptNecessaryCookiesShort()" class="btn btn-sm btn-outline-secondary px-3 py-2 text-muted" style="background-color: transparent; border-color: #aaa; color: #666; font-weight: 600; border-radius: 5px;" data-en="Necessary Only">Sadece Gerekli</button>
+            <a href="javascript:void(0)" onclick="toggleCookieModal()" class="btn btn-sm btn-link text-primary text-decoration-underline p-0 ms-0 ms-md-2" style="font-size: 0.85rem;" data-en="Cookie Settings">Çerez Ayarları</a>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="çerezAyarlariModal" tabindex="-1" aria-hidden="true" style="font-family: sans-serif; z-index: 10001;">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content shadow-lg" style="border-radius: 10px;">
+      <div class="modal-header border-0 pe-3 pt-3">
+        <h4 class="modal-title" id="çerezAyarlariModalLabel" style="font-weight: 700; color: #333;" data-en="Cookie Settings">Çerez Ayarları</h4>
+        <button type="button" class="btn-close" onclick="toggleCookieModal()"></button>
+      </div>
+      <div class="modal-body p-4 pt-0">
+        <p class="text-muted mb-4" style="font-size: 0.95rem;" data-en="You can customize your preferences below. Necessary cookies are required for the basic functionality of the site and cannot be disabled.">Tercihlerinizi aşağıdan özelleştirebilirsiniz. Gerekli çerezler, sitenin temel işlevselliği için zorunludur ve devre dışı bırakılamaz.</p>
+
+        <div class="card mb-3 shadow-sm border-secondary">
+          <div class="card-body d-flex align-items-center justify-content-between p-3">
+            <div>
+              <h6 class="mb-1" style="font-weight: 600; color: #444;" data-en="Necessary Cookies">Gerekli Çerezler</h6>
+              <p class="mb-0 text-muted" style="font-size: 0.85rem;" data-en="These cookies are required for the basic functionality of the website.">Bu çerezler web sitesinin temel işlevselliği için gereklidir.</p>
+            </div>
+            <div class="form-check form-switch p-0"><input class="form-check-input ms-0" type="checkbox" id="checkGerekli" style="transform: scale(1.5);" checked disabled></div>
+          </div>
+        </div>
+
+        <div class="card mb-3 shadow-sm">
+          <div class="card-body d-flex align-items-center justify-content-between p-3">
+            <div>
+              <h6 class="mb-1" style="font-weight: 600; color: #444;" data-en="Analytics Cookies">Analitik Çerezler</h6>
+              <p class="mb-0 text-muted" style="font-size: 0.85rem;" data-en="Helps us understand how the website is used.">Web sitemizin nasıl kullanıldığını anlamamıza yardımcı olur.</p>
+            </div>
+            <div class="form-check form-switch p-0"><input class="form-check-input ms-0" type="checkbox" id="checkAnalitik" style="transform: scale(1.5);"></div>
+          </div>
+        </div>
+
+        <div class="card mb-3 shadow-sm">
+          <div class="card-body d-flex align-items-center justify-content-between p-3">
+            <div>
+              <h6 class="mb-1" style="font-weight: 600; color: #444;" data-en="Advertising Cookies">Reklam Çerezleri</h6>
+              <p class="mb-0 text-muted" style="font-size: 0.85rem;" data-en="Used to show you relevant advertisements.">Size alakalı reklamlar göstermek için kullanılır.</p>
+            </div>
+            <div class="form-check form-switch p-0"><input class="form-check-input ms-0" type="checkbox" id="checkReklam" style="transform: scale(1.5);"></div>
+          </div>
+        </div>
+
+        <div class="card mb-3 shadow-sm">
+          <div class="card-body d-flex align-items-center justify-content-between p-3">
+            <div>
+              <h6 class="mb-1" style="font-weight: 600; color: #444;" data-en="Marketing Cookies">Pazarlama Çerezleri</h6>
+              <p class="mb-0 text-muted" style="font-size: 0.85rem;" data-en="Used to measure the effectiveness of campaigns.">Kampanyaların etkinliğini ölçmek için kullanılır.</p>
+            </div>
+            <div class="form-check form-switch p-0"><input class="form-check-input ms-0" type="checkbox" id="checkPazarlama" style="transform: scale(1.5);"></div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer border-0 p-4 pt-0 d-flex justify-content-end gap-3">
+        <button type="button" class="btn btn-outline-secondary px-4 py-2" onclick="toggleCookieModal()" data-en="Cancel">İptal</button>
+        <button type="button" class="btn btn-primary px-4 py-2 text-white" onclick="saveCookieSettings()" style="background-color: #42adf0; border-color: #42adf0; border-radius: 5px; font-weight: 600;" data-en="Save Settings">Ayarları Kaydet</button>
+      </div>
+    </div>
+  </div>
+</div>

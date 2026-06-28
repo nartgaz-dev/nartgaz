@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html class="no-js" lang="tr">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Hakkımızda | Nart Gaz - Endüstriyel Gaz Çözümleri</title>
+    <meta name="description" content="Nart Gaz kurumsal profili, vizyonu, misyonu ve endüstriyel gaz çözümlerindeki kalite politikası." />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png" />
+
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/css/lineicons.css" />
+    <link rel="stylesheet" href="assets/css/animate.css" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+
+    <style>
+      /* Genel Kart Kapsayıcısı */
+      .nart-tech-card-wrapper {
+        position: relative;
+        padding: 30px;
+        display: inline-block;
+        width: 100%;
+        z-index: 1;
+      }
+
+      /* Köşelere teknik "+" artı işaretleri ekler (Endüstriyel Hava Katar) */
+      .nart-tech-card-wrapper::before,
+      .nart-tech-card-wrapper::after {
+        content: "+";
+        position: absolute;
+        font-family: monospace;
+        font-size: 24px;
+        color: #42adf0; /* Çerez bannerındaki açık mavi */
+        opacity: 0.6;
+      }
+      .nart-tech-card-wrapper::before { top: 0; left: 0; }
+      .nart-tech-card-wrapper::after { bottom: 0; right: 0; }
+
+      /* Kesikli Teknik Çizgi Altyapısı */
+      .tech-grid-line {
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        right: 15px;
+        bottom: 15px;
+        border: 1px dashed rgba(66, 173, 240, 0.3);
+        pointer-events: none;
+        z-index: 2;
+        border-radius: 12px;
+      }
+
+      /* Resim filtre kapsayıcısı */
+      .img-tint-container {
+        position: relative;
+        border-radius: 12px;
+        overflow: hidden;
+        z-index: 3;
+        box-shadow: 0 20px 50px rgba(16, 36, 71, 0.15);
+        transition: all 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+      }
+
+      /* Hakkımızda Sayfası Şeffaf Mavi Filtre (Katman Sırası Düzeltildi) */
+      .img-tint-container::after {
+        content: "";
+        position: absolute;
+        top: 0; left: 0; width: 100%; height: 100%;
+        /* Ürün sayfasına göre biraz daha şeffaf bir kurumsal mavi tonu */
+        background: linear-gradient(135deg, rgba(22, 36, 71, 0.4) 0%, rgba(66, 173, 240, 0.15) 100%);
+        transition: all 0.5s ease;
+        pointer-events: none;
+        z-index: 4;
+      }
+
+      /* Ana Fabrika Görseli */
+      .nart-main-img {
+        width: 100%;
+        height: auto;
+        display: block;
+        transition: all 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+      }
+
+      /* Havada Süzülen Cam Rozetler (Katman Sırası En Üste Alındı) */
+      .floating-badge {
+        position: absolute;
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        padding: 14px 22px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        box-shadow: 0 15px 35px rgba(16, 36, 71, 0.12);
+        z-index: 5;
+        transition: all 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+      }
+      .floating-badge i {
+        font-size: 24px;
+        color: #162447;
+        background: rgba(66, 173, 240, 0.15);
+        padding: 10px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .floating-badge span {
+        display: block;
+        font-weight: 700;
+        color: #162447;
+        font-size: 18px;
+        line-height: 1.2;
+      }
+      .floating-badge p {
+        font-size: 13px;
+        color: #5B657E;
+        margin: 0;
+        line-height: 1.2;
+        font-family: 'Open Sans', sans-serif;
+      }
+
+      /* Rozetlerin Konumları ve Bağımsız Yumuşak Süzülme Animasyonları */
+      .badge-experience {
+        top: 12%;
+        left: -15px;
+        animation: nartFloat 4s ease-in-out infinite;
+      }
+      .badge-facility {
+        bottom: 15%;
+        right: -15px;
+        animation: nartFloat 4s ease-in-out infinite 2s;
+      }
+
+      /* CSS Süzülme Döngüsü */
+      @keyframes nartFloat {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+      }
+
+      /* İNTERAKTİF ETKİ: Fareyle Üzerine Gelindiğinde (Hover) */
+      .nart-tech-card-wrapper:hover .img-tint-container {
+        box-shadow: 0 30px 60px rgba(16, 36, 71, 0.25);
+      }
+      /* Hover kutunun üzerine gelindiğinde fabrika tüm gerçekliğiyle parlasın */
+      .nart-tech-card-wrapper:hover .img-tint-container::after {
+        background: linear-gradient(135deg, rgba(22, 36, 71, 0) 0%, rgba(66, 173, 240, 0) 100%);
+      }
+      .nart-tech-card-wrapper:hover .nart-main-img {
+        transform: scale(1.025);
+      }
+      /* Resim büyürken rozetler de dışarıya doğru şık bir derinlik hissiyle esner */
+      .nart-tech-card-wrapper:hover .badge-experience {
+        transform: translate(-15px, -5px) scale(1.03);
+      }
+      .nart-tech-card-wrapper:hover .badge-facility {
+        transform: translate(15px, 5px) scale(1.03);
+      }
+    </style>
+  </head>
+  <body>
+
+    <div class="preloader">
+      <div class="loader">
+        <div class="spinner">
+          <div class="container">
+            <div class="spinner-rotator">
+              <div class="spinner-left">
+                <div class="spinner-circle"></div>
+              </div>
+              <div class="spinner-right">
+                <div class="spinner-circle"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="nart-header"></div>
+    <section class="hero-section" style="padding: 180px 0 80px; background-color: #162447;">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-md-6">
+            <div class="hero-content mb-0">
+              <h1 class="wow fadeInUp" data-wow-delay=".4s" data-en="About Us" style="font-size: 48px; margin-bottom: 15px;">Hakkımızda</h1>
+              <p class="wow fadeInUp" data-wow-delay=".6s" data-en="The intersection of safety and innovation in industrial gas control mechanisms." style="color: rgba(255,255,255,0.7); margin-bottom: 0;">Endüstriyel gaz kontrol mekanizmalarında emniyet og inovasyonun birleştiği nokta.</p>
+            </div>
+          </div>
+          <div class="col-md-6 text-md-end mt-4 mt-md-0">
+            <nav aria-label="breadcrumb" class="wow fadeInUp" data-wow-delay=".5s">
+              <ol class="breadcrumb justify-content-md-end mb-0" style="background: transparent; padding: 0;">
+                <li class="breadcrumb-item"><a href="index.html" data-en="Home" style="color: rgba(255,255,255,0.6);">Anasayfa</a></li>
+                <li class="breadcrumb-item active text-white" aria-current="page" data-en="About Us">Hakkımızda</li>
+              </ol>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="about-section pt-120 pb-120">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-xl-6 col-lg-6">
+            <div class="about-content mb-40 lg-mb-0">
+              <div class="section-title mb-30">
+                <h2 class="mb-25 wow fadeInUp" data-wow-delay=".2s" data-en="Our Story">
+                  Kuruluş Hikayemiz
+                </h2>
+                <p class="wow fadeInUp" data-wow-delay=".4s" data-en="As NART Industrial Welding Technologies and Natural Gas Systems, we operate with the purpose of providing reliable, high-quality, and engineering-oriented solutions in the field of natural gas pressure reduction and metering stations (RMS).">
+                  NART Endüstriyel Kaynak Teknolojileri og Doğalgaz Sistemleri olarak, doğalgaz basınç düşürme og ölçüm istasyonları (RMS) alanında güvenilir, kaliteli og mühendislik odaklı çözümler sunmak amacıyla faaliyet göstermekteyiz.
+                </p>
+                <p class="mt-20 wow fadeInUp" data-wow-delay=".5s" data-en="The foundations of our company are built upon long years of field and manufacturing experience in the industry. Our founder, Muhammet Özdemir, has more than 25 years of work experience in the natural gas sector, specializing particularly in natural gas equipment manufacturing, welding technologies, mechanical production, and RMS stations.">
+                  Firmamızın temelleri, sektörde edinilmiş uzun yıllara dayanan saha og imalat tecrübesi üzerine kurulmuştur. Kurucumuz Muhammet Özdemir, doğalgaz sektöründe 25 yılı aşkın çalışma deneyimine sahip olup; özellikle doğalgaz ekipmanları imalatı, kaynak teknolojileri, mekanik üretim og RMS istasyonları konusunda uzmanlaşmıştır.
+                </p>
+                <p class="mt-20 wow fadeInUp" data-wow-delay=".6s" data-en="Thanks to the knowledge and technical experience gained over the years, a structure centered on quality, safety, and sustainable production has been established. Our company aims to add value to the sector by combining modern production approaches with engineering discipline, precise welding technologies, and a customer-oriented service mentality.">
+                  Yıllar boyunca edinilen bilgi birikimi og teknik deneyim sayesinde; kalite, güvenlik og sürdürülebilir üretim anlayışını merkezine alan bir yapı oluşturulmuştur. Firmamız, modern üretim anlayışı ile birlikte mühendislik disiplinini, hassas kaynak teknolojilerini og müşteri odaklı hizmet anlayışını bir araya getirerek sektöre değer katmayı hedeflemektedir.
+                </p>
+                <p class="mt-20 wow fadeInUp" data-wow-delay=".7s" data-en="As NART, our goal is to become a strong brand preferred in both domestic and international markets for its reliability, offering high-quality natural gas systems and industrial manufacturing solutions. We resolutely continue our work by adopting customer satisfaction, technical accuracy, and quality production as our core principles.">
+                  NART olarak hedefimiz; Türkiye’de og uluslararası pazarda güvenilirliğiyle tercih edilen, yüksek kaliteli doğalgaz sistemleri og endüstriyel imalat çözümleri sunan güçlü bir marka olmaktır. Müşteri memnuniyetini, teknik doğruluğu og kaliteli üretimi temel prensip kabul ederek çalışmalarımıza kararlılıkla devam etmekteyiz.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-6 col-lg-6">
+            <div class="nart-tech-card-wrapper wow fadeInRight" data-wow-delay=".4s">
+
+              <div class="tech-grid-line"></div>
+
+              <div class="img-tint-container">
+                <img src="assets/img/about/nartgaz.jpeg" alt="Nart Gaz Fabrika Binası" class="nart-main-img" />
+              </div>
+
+              <div class="floating-badge badge-experience">
+                <i class="lni lni-certificate"></i>
+                <div>
+                  <span data-en="25+ Years">25+ Yıl</span>
+                  <p data-en="Field Experience">Saha Tecrübesi</p>
+                </div>
+              </div>
+
+              <div class="floating-badge badge-facility">
+                <i class="lni lni-construction"></i>
+                <div>
+                  <span>RMS</span>
+                  <p data-en="Production Facility">Üretim Tesisi</p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="feature-section pt-100 pb-60" style="background: rgba(88, 100, 255, 0.05);">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-6 col-md-10">
+            <div class="box-style color-1 wow fadeInUp" data-wow-delay=".2s">
+              <div class="icon">
+                <i class="lni lni-target"></i>
+              </div>
+              <div class="content">
+                <h3 data-en="Our Mission">Misyonumuz</h3>
+                <p data-en="To produce reliable, high-quality, and sustainable solutions in the fields of industrial natural gas systems and welded manufacturing, primarily natural gas pressure reduction and metering stations.">
+                  Doğalgaz basınç düşürme og ölçüm istasyonları başta olmak üzere, endüstriyel doğalgaz sistemleri og kaynaklı imalat alanlarında; güvenilir, kaliteli og sürdürülebilir çözümler üretmek.
+                </p>
+                <p class="mt-2" data-en="Our primary mission is to contribute to the development of the sector with our production approach in compliance with engineering discipline, technical standards, and customer needs, combining high quality with reliable service to offer long-lasting and efficient systems to our customers.">
+                  Mühendislik disiplinine, teknik standartlara og müşteri ihtiyaçlarına uygun üretim anlayışımız ile sektörün gelişimine katkı sağlamak, yüksek kaliteyi güvenilir hizmet ile birleştirerek müşterilerimize uzun ömürlü og verimli sistemler sunmak temel misyonumuzdur.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-10">
+            <div class="box-style color-2 wow fadeInUp" data-wow-delay=".4s">
+              <div class="icon">
+                <i class="lni lni-eye"></i>
+              </div>
+              <div class="content">
+                <h3 data-en="Our Vision">Vizyonumuz</h3>
+                <p data-en="To become one of the trusted and preferred brands in Turkey in the field of natural gas systems and industrial welding technologies through our innovative production mentality, strong technical infrastructure, and quality manufacturing approach.">
+                  Doğalgaz sistemleri og endüstriyel kaynak teknolojileri alanında; yenilikçi üretim anlayışı, güçlü teknik altyapısı og kaliteli imalat yaklaşımı ile Türkiye’nin güvenilir og tercih edilen markalarından biri olmak.
+                </p>
+                <p class="mt-2" data-en="We aim for sustainable growth as a company that stands out with its quality, safety, and engineering strength in national and international projects, closely following technology and adding value to the sector.">
+                  Ulusal og uluslararası projelerde kalite, güvenlik og mühendislik gücüyle öne çıkan; teknolojiyi yakından takip eden og sektöre değer katan bir firma olarak sürdürülebilir büyümeyi hedeflemekteyiz.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="feature-extended-section pt-120 pb-100">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-xxl-6 col-xl-7 col-lg-8 col-md-9">
+            <div class="section-title text-center mb-60">
+              <h2 class="mb-25 wow fadeInUp" data-wow-delay=".2s" data-en="Our Values">
+                Kurumsal Değerlerimiz
+              </h2>
+              <p class="wow fadeInUp" data-wow-delay=".4s" data-en="Our core principles that guide our decisions across all operational processes, from the design phase to assembly.">
+                Tüm operasyonel süreçlerimizde, tasarım aşamasından montaja kadar kararlarımıza yön veren temel ilkelerimiz.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-4 col-md-6">
+            <div class="single-feature-extended wow fadeInUp" data-wow-delay=".2s">
+              <div class="icon">
+                <i class="lni lni-shield"></i>
+              </div>
+              <div class="content">
+                <h3 data-en="Safety & Security First">Önce Emniyet og Güvenlik</h3>
+                <p data-en="We implement an uncompromising safety architecture that leaves no room for error in leak control and emergency evacuation systems.">
+                  Sızıntı kontrolü ve acil durum tahliye sistemlerinde hata payı bırakmayan, tavizsiz bir güvenlik mimarisi uyguluyoruz.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6">
+            <div class="single-feature-extended wow fadeInUp" data-wow-delay=".4s">
+              <div class="icon">
+                <i class="lni lni-certificate"></i>
+              </div>
+              <div class="content">
+                <h3 data-en="International Standards">Uluslararası Standartlar</h3>
+                <p data-en="We ensure full compliance with international quality and safety standards (ISO, CE, TSE) in all our projects and equipment manufacturing.">Tüm projelerimizde ve ekipman üretimimizde uluslararası kalite ve güvenlik standartlarına (ISO, CE, TSE) tam uyum sağlıyoruz.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6"><div class="single-feature-extended"><div class="icon"><i class="lni lni-construction-hammer"></i></div><div class="content"><h3 data-en="Engineering Expertise">Mühendislik Uzmanlığı</h3><p data-en="With our certified and competent technical team, we don't just manufacture equipment; we design smart manifold and regulation projects tailored specifically to the structure of your facilities.">Alanında sertifikalı, yetkin teknik ekibimizle sadece ekipman üretmiyor; tesislerinizin yapısına en uygun akıllı manifold og regülasyon projeleri tasarlıyoruz.</p></div></div></div>
+        </div>
+      </div>
+    </section>
+
+    <div id="nart-footer"></div>
+    <a href="#" class="scroll-top btn-hover">
+      <i class="lni lni-chevron-up"></i>
+    </a>
+
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/wow.min.js"></script>
+    <script src="assets/js/main.js"></script>
+  </body>
+</html>

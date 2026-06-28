@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html class="no-js" lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Ürünlerimiz | Nart Gaz - Endüstriyel Çözümler</title>
+    <meta name="description" content="Nart Gaz endüstriyel istasyonlar, çelik filtreler, eşanjörler, regülatörler ve vanalar ürün katalog sayfası." />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png" />
+
+    <!-- ======== CSS Dosyaları ======== -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/css/lineicons.css" />
+    <link rel="stylesheet" href="assets/css/animate.css" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+
+    <style>
+      /* Ürün ve İstasyon Kart Yapısı */
+      .nart-product-card {
+        background: #fff;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(16, 36, 71, 0.04);
+        border: 1px solid #f0f4f8;
+        transition: all 0.4s cubic-bezier(0.2, 0.6, 0.2, 1);
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+      }
+      .nart-product-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 25px 50px rgba(16, 36, 71, 0.12);
+      }
+
+      /* Görsel ve Slayt Alanı */
+      .product-media-box {
+        position: relative;
+        overflow: hidden;
+        background: #111a2e;
+        height: 300px;
+        width: 100%;
+      }
+
+      /* Fotoğrafların Önündeki Şeffaf Mavi Filtre (Overlay) */
+      .product-media-box::after {
+        content: "";
+        position: absolute;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: linear-gradient(135deg, rgba(22, 36, 71, 0.45) 0%, rgba(66, 173, 240, 0.25) 100%);
+        z-index: 2;
+        pointer-events: none;
+        transition: all 0.4s ease;
+      }
+
+      .nart-product-card:hover .product-media-box::after {
+        background: linear-gradient(135deg, rgba(22, 36, 71, 0.15) 0%, rgba(66, 173, 240, 0.05) 100%);
+      }
+      .product-media-box img, .product-media-box video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        cursor: pointer;
+      }
+
+      /* HUD Bilgi Alanı */
+      .product-hud-badge {
+        position: absolute;
+        top: 15px; right: 15px;
+        background: rgba(22, 36, 71, 0.85);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border: 1px solid rgba(255,255,255,0.1);
+        padding: 4px 12px;
+        border-radius: 6px;
+        color: #42adf0;
+        font-family: monospace;
+        font-size: 11px;
+        font-weight: 700;
+        z-index: 10;
+      }
+
+      /* Büyütme İkon İpucu */
+      .media-zoom-hint {
+        position: absolute;
+        bottom: 15px; left: 15px;
+        background: rgba(66, 173, 240, 0.9);
+        color: #fff;
+        width: 32px; height: 32px;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        opacity: 0;
+        z-index: 10;
+        transition: all 0.3s ease;
+        pointer-events: none;
+      }
+      .product-media-box:hover .media-zoom-hint { opacity: 1; }
+
+      /* Kart Metin Alanları */
+      .nart-product-info {
+        padding: 25px;
+        text-align: center;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .nart-product-info h4 { font-size: 18px; color: #162447; margin-bottom: 8px; font-weight: 700; }
+      .nart-product-info p { font-size: 14px; color: #5B657E; margin-bottom: 0; }
+
+      /* Dinamik Filtre Navigasyonu */
+      .nart-filter-nav { display: flex; justify-content: center; gap: 10px; margin-bottom: 50px; flex-wrap: wrap; }
+      .nart-filter-btn { background: #fff; border: 2px solid #e2e8f0; color: #162447; padding: 10px 24px; font-size: 15px; font-weight: 700; border-radius: 50px; transition: all 0.3s ease; }
+      .nart-filter-btn.active, .nart-filter-btn:hover { background: #162447; border-color: #162447; color: #fff; }
+
+      .filter-item { transition: opacity 0.4s ease, transform 0.4s ease; }
+
+      /* Slayt Kontrol Okları */
+      .carousel-control-prev, .carousel-control-next { width: 12%; opacity: 0; transition: opacity 0.3s ease; z-index: 11; }
+      .nart-product-card:hover .carousel-control-prev, .nart-product-card:hover .carousel-control-next { opacity: 0.8; }
+
+      /* ================= POP-UP / LIGHTBOX GELİŞMİŞ PREMIUM STİLLERİ ================= */
+      .lightbox-info-panel {
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: 16px;
+        padding: 30px;
+        text-align: left;
+      }
+      .lightbox-info-panel h3 { color: #fff; font-size: 26px; font-weight: 700; margin-bottom: 4px; }
+      .lightbox-info-panel .tech-sub { font-family: monospace; color: #42adf0; font-size: 12px; letter-spacing: 1.5px; margin-bottom: 22px; display: block; }
+
+      /* Gelişmiş Estetik Açıklama Paneli (Description Box) */
+      .lightbox-desc-box {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 25px;
+      }
+      .lightbox-desc-box h5 {
+        color: #fff;
+        font-size: 14px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .lightbox-desc-box h5 i {
+        color: #42adf0;
+        font-size: 16px;
+      }
+      .lightbox-info-panel .tech-description {
+        color: #cbd5e1;
+        font-size: 14px;
+        line-height: 1.6;
+        margin: 0;
+      }
+
+      /* Teknik Özellik Grid Kutuları */
+      .lightbox-spec-box {
+        background: rgba(255, 255, 255, 0.01);
+        border-left: 3px solid #42adf0;
+        padding: 14px 18px;
+        border-radius: 0 12px 12px 0;
+        height: 100%;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      }
+      .lightbox-spec-box i { font-size: 18px; color: #42adf0; margin-bottom: 8px; display: block; }
+      .lightbox-spec-box span { display: block; font-size: 11px; color: #64748b; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 2px; font-weight: 600; }
+      .lightbox-spec-box strong { display: block; font-size: 15px; color: #fff; font-family: 'Open Sans', sans-serif; }
+
+      #lightboxMediaContent .product-media-box::after { display: none !important; }
+      #lightboxMediaContent .carousel-control-prev, #lightboxMediaContent .carousel-control-next { opacity: 0.8 !important; }
+    </style>
+  </head>
+  <body>
+
+    <div class="preloader"><div class="loader"><div class="spinner"><div class="spinner-container"><div class="spinner-rotator"><div class="spinner-left"><div class="spinner-circle"></div></div><div class="spinner-right"><div class="spinner-circle"></div></div></div></div></div></div></div>
+
+    <!-- ======== header start ======== -->
+    <div id="nart-header"></div>
+    <!-- ======== header end ======== -->
+
+    <!-- ======== Hero Bölümü ======== -->
+    <section class="hero-section" style="padding: 180px 0 80px; background-color: #162447;">
+      <div class="container">
+        <div class="row align-items-center">
+          <!-- Sol Taraf: Başlık ve Açıklama -->
+          <div class="col-md-8">
+            <div class="hero-content mb-0">
+              <h1 class="wow fadeInUp" data-wow-delay=".4s" data-en="Our Product Groups" style="font-size: 48px; margin-bottom: 15px;">Ürün Gruplarımız</h1>
+              <p class="wow fadeInUp" data-wow-delay=".6s" data-en="The main systems we produce with our engineering discipline and technical manufacturing power." style="color: rgba(255,255,255,0.7); margin-bottom: 0;">Mühendislik disiplini ve teknik imalat gücümüzle ürettiğimiz ana sistemler.</p>
+            </div>
+          </div>
+
+          <!-- 🌟 SAĞ TARAF: Yeni Dil Duyarlı Breadcrumb Alanı -->
+          <div class="col-md-4 text-md-end mt-4 mt-md-0">
+            <nav aria-label="breadcrumb" class="wow fadeInUp" data-wow-delay=".5s">
+              <ol class="breadcrumb justify-content-md-end mb-0" style="background: transparent; padding: 0;">
+                <li class="breadcrumb-item"><a href="index.html" data-en="Home" style="color: rgba(255,255,255,0.6);">Anasayfa</a></li>
+                <li class="breadcrumb-item active text-white" aria-current="page" data-en="Products">Ürünlerimiz</li>
+              </ol>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======== Ürünler Katalog Alanı ======== -->
+    <section class="product-section pt-120 pb-120">
+      <div class="container">
+
+        <!-- Dinamik Filtre Butonları -->
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="nart-filter-nav">
+              <button class="nart-filter-btn active" data-filter="all" data-en="All Products">Tüm Ürünler</button>
+              <button class="nart-filter-btn" data-filter="stations" data-en="Stations (RMS/RS)">İstasyonlar (RMS/RS)</button>
+              <button class="nart-filter-btn" data-filter="filters" data-en="Steel Filters">Çelik Filtreler</button>
+              <button class="nart-filter-btn" data-filter="exchangers" data-en="Heat Exchangers">Eşanjörler</button>
+              <button class="nart-filter-btn" data-filter="regulators" data-en="Regulators">Regülatörler</button>
+              <button class="nart-filter-btn" data-filter="valves" data-en="Valves">Vanalar</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ürün Kartları Grid Yapısı -->
+        <div class="row g-4" id="nart-products-grid">
+
+          <!-- 1.1 RMS-A İstasyonu -->
+          <div class="col-lg-4 col-md-6 filter-item stations">
+            <div class="nart-product-card"
+                 data-title="RMS-A İstasyonu" data-en-title="RMS-A Station"
+                 data-desc="Yüksek basınç iletim hatları için özel mühendislik hesaplamalarıyla tasarlanmış ana şebeke basınç düşürme istasyonları."
+                 data-en-desc="Main network pressure reduction stations designed with special engineering calculations for high-pressure transmission lines."
+                 data-spec1="İstasyon Sınıfı:Şehir Giriş (City Gate)" data-en-spec1="Station Class:City Gate"
+                 data-spec2="Giriş Basıncı:35 - 70 Bar" data-en-spec2="Inlet Pressure:35 - 70 Bar"
+                 data-spec3="Çıkış Basıncı:12 - 25 Bar" data-en-spec3="Outlet Pressure:12 - 25 Bar"
+                 data-spec4="Proje Onayı:EPDK / İGDAŞ Normu" data-en-spec4="Project Approval:EPDK / İGDAŞ Norm">
+              <div class="product-media-box">
+                <span class="product-hud-badge">RMS-A</span><div class="media-zoom-hint"><i class="lni lni-zoom-in"></i></div>
+                <img src="assets/img/products/istasyonlar/RMS-istasyonlari/RMS-A-istasyonu/1.jpeg" alt="RMS-A İstasyonu" />
+              </div>
+              <div class="nart-product-info"><h4 data-en="RMS-A Station">RMS-A İstasyonu</h4><p data-en="Main pressure reduction stations designed for high-pressure transmission lines.">Yüksek basınç iletim hatları için tasarlanmış ana basınç düşürme istasyonları.</p></div>
+            </div>
+          </div>
+
+          <!-- 1.2 5000 m3/h RMS-B İstasyonu -->
+          <div class="col-lg-4 col-md-6 filter-item stations">
+            <div class="nart-product-card"
+                 data-title="5000 m³/h RMS-B İstasyonu" data-en-title="5000 m³/h RMS-B Station"
+                 data-desc="İGDAŞ standartlarına tam uyumlu, şehir şebeke dağıtım ve büyük ölçekli endüstriyel üretim tesisleri koruma ve dağıtım merkezi."
+                 data-en-desc="City network distribution and large-scale industrial production facilities protection and distribution center fully compatible with İGDAŞ standards."
+                 data-spec1="Nominal Debi:5000 m³/h" data-en-spec1="Nominal Flow:5000 m³/h"
+                 data-spec2="Giriş Basıncı:6 - 19 Bar" data-en-spec2="Inlet Pressure:6 - 19 Bar"
+                 data-spec3="Çıkış Basıncı:1 - 4 Bar" data-en-spec3="Outlet Pressure:1 - 4 Bar"
+                 data-spec4="Resmi Kurum Onayı:İGDAŞ Sertifikasyon" data-en-spec4="Official Authority Approval:İGDAŞ Certification">
+              <div class="product-media-box">
+                <span class="product-hud-badge">RMS-B / 5000 m³</span><div class="media-zoom-hint"><i class="lni lni-zoom-in"></i></div>
+                <div id="carouselRMSB" class="carousel slide h-100" data-bs-ride="carousel" data-bs-interval="false">
+                  <div class="carousel-inner h-100">
+                    <div class="carousel-item active h-100"><img src="assets/img/products/istasyonlar/RMS-istasyonlari/RMS-B-istasyonu/5000-m3h-RMS-B-istasyonu/1.jpeg" class="d-block w-100 h-100"></div>
+                    <div class="carousel-item h-100"><img src="assets/img/products/istasyonlar/RMS-istasyonlari/RMS-B-istasyonu/5000-m3h-RMS-B-istasyonu/2.jpeg" class="d-block w-100 h-100"></div>
+                    <div class="carousel-item h-100"><img src="assets/img/products/istasyonlar/RMS-istasyonlari/RMS-B-istasyonu/5000-m3h-RMS-B-istasyonu/16.jpeg" class="d-block w-100 h-100"></div>
+                    <div class="carousel-item h-100"><video src="assets/img/products/istasyonlar/RMS-istasyonlari/RMS-B-istasyonu/5000-m3h-RMS-B-istasyonu/18-rms-b.mp4" muted loop class="w-100 h-100"></video></div>
+                    <div class="carousel-item h-100"><video src="assets/img/products/istasyonlar/RMS-istasyonlari/RMS-B-istasyonu/5000-m3h-RMS-B-istasyonu/19-rms-b.mp4" muted loop class="w-100 h-100"></video></div>
+                    <div class="carousel-item h-100"><video src="assets/img/products/istasyonlar/RMS-istasyonlari/RMS-B-istasyonu/5000-m3h-RMS-B-istasyonu/20-rms-b.mp4" muted loop class="w-100 h-100"></video></div>
+                  </div>
+                  <button class="carousel-control-prev" type="button" data-bs-target="#carouselRMSB" data-bs-slide="prev"><span class="carousel-control-prev-icon"></span></button>
+                  <button class="carousel-control-next" type="button" data-bs-target="#carouselRMSB" data-bs-slide="next"><span class="carousel-control-next-icon"></span></button>
+                </div>
+              </div>
+              <div class="nart-product-info"><h4 data-en="5000 m³/h RMS-B Station">5000 m³/h RMS-B İstasyonu</h4><p data-en="High-capacity regional and manufacturing reduction center suitable for İGDAŞ networks.">İGDAŞ şebekelerine uygun, yüksek kapasiteli bölge ve imalat düşürme merkezi.</p></div>
+            </div>
+          </div>
+
+          <!-- 1.3 500 m3/h RMS-C İstasyonu -->
+          <div class="col-lg-4 col-md-6 filter-item stations">
+            <div class="nart-product-card"
+                 data-title="500 m³/h RMS-C İstasyonu" data-en-title="500 m³/h RMS-C Station"
+                 data-desc="Fabrikalar, endüstriyel kazan daireleri ve ticari yapılar için kompakt, güvenli ölçüm ve basınç stabilizasyon kabini."
+                 data-en-desc="Compact, safe measurement and pressure stabilization cabinet for factories, industrial boiler rooms, and commercial buildings."
+                 data-spec1="Maksimum Akış:500 m³/h" data-en-spec1="Maximum Flow:500 m³/h"
+                 data-spec2="Giriş Basıncı:1 - 4 Bar" data-en-spec2="Inlet Pressure:1 - 4 Bar"
+                 data-spec3="Çıkış Basıncı:21 - 300 mbar" data-en-spec3="Outlet Pressure:21 - 300 mbar"
+                 data-spec4="Bağlantı Tipi:Flanşlı DN50" data-en-spec4="Connection Type:Flanged DN50">
+              <div class="product-media-box">
+                <span class="product-hud-badge">RMS-C / 500 m³</span><div class="media-zoom-hint"><i class="lni lni-zoom-in"></i></div>
+                <img src="assets/img/products/istasyonlar/RMS-istasyonlari/RMS-C-istasyonu/500-m3h-RMS-C-istasyonu/1.jpeg" alt="500 m3/h RMS-C İstasyonu" />
+              </div>
+              <div class="nart-product-info"><h4 data-en="500 m³/h RMS-C Station">500 m³/h RMS-C İstasyonu</h4><p data-en="Compact metering and regulation panels for industrial facilities and commercial structures.">Endüstriyel tesisler ve ticari yapılar için kompakt ölçüm ve regülasyon panelleri.</p></div>
+            </div>
+          </div>
+
+          <!-- 1.4 750 m3/h RMS-C İstasyonu -->
+          <div class="col-lg-4 col-md-6 filter-item stations">
+            <div class="nart-product-card"
+                 data-title="750 m³/h RMS-C İstasyonu" data-en-title="750 m³/h RMS-C Station"
+                 data-desc="Orta ve büyük ölçekli fabrikaların kesintisiz ve dalgalanmasız gaz kontrolü için imal edilmiş İGDAŞ onaylı hat istasyonu."
+                 data-en-desc="İGDAŞ approved line station manufactured for uninterrupted and fluctuation-free gas control of medium and large-scale factories."
+                 data-spec1="İstasyon Debisi:750 m³/h" data-en-spec1="Station Flow Rate:750 m³/h"
+                 data-spec2="Giriş Basıncı:1 - 4 Bar" data-en-spec2="Inlet Pressure:1 - 4 Bar"
+                 data-spec3="Çıkış Basıncı:21 - 300 mbar" data-en-spec3="Outlet Pressure:21 - 300 mbar"
+                 data-spec4="Emniyet Donanımı:Slam-Shut Kapatmalı" data-en-spec4="Safety Equipment:With Slam-Shut Valve">
+              <div class="product-media-box">
+                <span class="product-hud-badge">RMS-C / 750 m³</span><div class="media-zoom-hint"><i class="lni lni-zoom-in"></i></div>
+                <img src="assets/img/products/istasyonlar/RMS-istasyonlari/RMS-C-istasyonu/750-m3h-RMS-C-istasyonu/1.jpeg" alt="750 m3/h RMS-C" />
+              </div>
+              <div class="nart-product-info"><h4 data-en="750 m³/h RMS-C Station">750 m³/h RMS-C İstasyonu</h4><p data-en="İGDAŞ approved line station optimized for precise consumption factories.">Hassas tüketim fabrikaları için optimize edilmiş İGDAŞ onaylı hat istasyonu.</p></div>
+            </div>
+          </div>
+
+          <!-- 1.5 1000 m3/h RMS-C İstasyonu -->
+          <div class="col-lg-4 col-md-6 filter-item stations">
+            <div class="nart-product-card"
+                 data-title="1000 m³/h RMS-C İstasyonu" data-en-title="1000 m³/h RMS-C Station"
+                 data-desc="Ağır sanayi, döküm tesisleri ve yüksek tüketimli üretim merkezlerinin emniyetli doğalgaz akış ve faturalandırma paneli."
+                 data-en-desc="Safe natural gas flow and billing panel for heavy industry, foundry plants, and high-consumption production centers."
+                 data-spec1="Nominal Güç:1000 m³/h" data-en-spec1="Nominal Power:1000 m³/h"
+                 data-spec2="Giriş Basıncı:1 - 4 Bar" data-en-spec2="Inlet Pressure:1 - 4 Bar"
+                 data-spec3="Çıkış Basıncı:21 - 300 mbar" data-en-spec3="Outlet Pressure:21 - 300 mbar"
+                 data-spec4="Sayaç Altyapısı:Rotary / Türbinli" data-en-spec4="Meter Infrastructure:Rotary / Turbine">
+              <div class="product-media-box">
+                <span class="product-hud-badge">RMS-C / 1000 m³</span><div class="media-zoom-hint"><i class="lni lni-zoom-in"></i></div>
+                <img src="assets/img/products/istasyonlar/RMS-istasyonlari/RMS-C-istasyonu/1000-m3h-RMS-C-istasyonu/1.jpeg" alt="1000 m3/h RMS-C" />
+              </div>
+              <div class="nart-product-info"><h4 data-en="1000 m³/h RMS-C Station">1000 m³/h RMS-C İstasyonu</h4><p data-en="Uninterrupted and safe gas supply mechanism for high-flow industrial facilities.">Yüksek debili endüstriyel tesislerin kesintisiz gaz arzı için güvenli çözüm mekanizması.</p></div>
+            </div>
+          </div>
+
+          <!-- 1.6 400 m3/h RS-C İstasyonu -->
+          <div class="col-lg-4 col-md-6 filter-item stations">
+            <div class="nart-product-card"
+                 data-title="400 m³/h RS-C İstasyonu" data-en-title="400 m³/h RS-C Station"
+                 data-desc="Bina ve lokal sanayi bölge girişleri için tasarlanan kabinet tipi emniyet kapatmalı basınç düşürme grubu."
+                 data-en-desc="Cabinet type pressure reduction group with safety shut-off designed for building and local industrial area entrances."
+                 data-spec1="Kabin Kapasitesi:400 m³/h" data-en-spec1="Cabinet Capacity:400 m³/h"
+                 data-spec2="Giriş Basıncı:1 - 2 Bar" data-en-spec2="Inlet Pressure:1 - 2 Bar"
+                 data-spec3="Çıkış Basıncı:21 - 50 mbar" data-en-spec3="Outlet Pressure:21 - 50 mbar"
+                 data-spec4="İmalat Metodu:Nart Sertifikalı Kaynak" data-en-spec4="Manufacturing Method:Nart Certified Welding">
+              <div class="product-media-box">
+                <span class="product-hud-badge">RS-C / 400 m³</span><div class="media-zoom-hint"><i class="lni lni-zoom-in"></i></div>
+                <div id="carouselRSC" class="carousel slide h-100" data-bs-ride="carousel" data-bs-interval="false">
+                  <div class="carousel-inner h-100">
+                    <div class="carousel-item active h-100"><img src="assets/img/products/istasyonlar/RS-C-istasyonu/400-m3h-RS-C-istasyonu/1.jpeg" class="d-block w-100 h-100"></div>
+                    <div class="carousel-item h-100"><img src="assets/img/products/istasyonlar/RS-C-istasyonu/400-m3h-RS-C-istasyonu/2.jpeg" class="d-block w-100 h-100"></div>
+                    <div class="carousel-item h-100"><img src="assets/img/products/istasyonlar/RS-C-istasyonu/400-m3h-RS-C-istasyonu/3.jpeg" class="d-block w-100 h-100"></div>
+                    <div class="carousel-item h-100"><img src="assets/img/products/istasyonlar/RS-C-istasyonu/400-m3h-RS-C-istasyonu/4.jpeg" class="d-block w-100 h-100"></div>
+                    <div class="carousel-item h-100"><img src="assets/img/products/istasyonlar/RS-C-istasyonu/400-m3h-RS-C-istasyonu/5.jpeg" class="d-block w-100 h-100"></div>
+                    <div class="carousel-item h-100"><img src="assets/img/products/istasyonlar/RS-C-istasyonu/400-m3h-RS-C-istasyonu/6.jpeg" class="d-block w-100 h-100"></div>
+                  </div>
+                  <button class="carousel-control-prev" type="button" data-bs-target="#carouselRSC" data-bs-slide="prev"><span class="carousel-control-prev-icon"></span></button>
+                  <button class="carousel-control-next" type="button" data-bs-target="#carouselRSC" data-bs-slide="next"><span class="carousel-control-next-icon"></span></button>
+                </div>
+              </div>
+              <div class="nart-product-info"><h4 data-en="400 m³/h RS-C Station">400 m³/h RS-C İstasyonu</h4><p data-en="Our cabinet type, safety shut-off gas regulation and metering line manufacturing.">Kabinet tipi, emniyet kapatmalı gaz regülasyon ve ölçüm hattı imalatımız.</p></div>
+            </div>
+          </div>
+
+          <!-- 2.1 Çelik Filtre - Tip 1 -->
+          <div class="col-lg-4 col-md-6 filter-item filters">
+            <div class="nart-product-card"
+                 data-title="Çelik Filtre (Tip 1)" data-en-title="Steel Filter (Type 1)"
+                 data-desc="Doğalgaz hatlarındaki mikro toz ve partikülleri yüksek hassasiyetle süzerek hassas regülatör ve sayaçları koruyan emniyet elemanı."
+                 data-en-desc="Safety element that filters micro dust and particles in natural gas lines with high precision, protecting sensitive regulators and meters."
+                 data-spec1="Gövde Malzemesi:Karbon Çelik imalat" data-en-spec1="Body Material:Carbon Steel fabrication"
+                 data-spec2="Basınç Sınıfı:PN16 / ANSI 150" data-en-spec2="Pressure Class:PN16 / ANSI 150"
+                 data-spec3="Filtrasyon:5 - 50 Mikron" data-en-spec3="Filtration:5 - 50 Micron"
+                 data-spec4="Bağlantı Çapı:DN25 - DN50" data-en-spec4="Connection Diameter:DN25 - DN50">
+              <div class="product-media-box">
+                <span class="product-hud-badge" data-en="FILTER / TYPE 1">FİLTRE / TİP 1</span><div class="media-zoom-hint"><i class="lni lni-zoom-in"></i></div>
+                <img src="assets/img/products/celik-filtreler/tip1/1.jpeg" alt="Çelik Filtre Tip 1" />
+              </div>
+              <div class="nart-product-info"><h4 data-en="Steel Filter (Type 1)">Çelik Filtre (Tip 1)</h4><p data-en="Provides equipment safety by filtering particles in gas lines with high precision.">Gaz hatlarındaki partikülleri yüksek hassasiyetle süzerek ekipman emniyeti sağlar.</p></div>
+            </div>
+          </div>
+
+          <!-- 2.2 Çelik Filtre - Tip 2 -->
+          <div class="col-lg-4 col-md-6 filter-item filters">
+            <div class="nart-product-card"
+                 data-title="Çelik Filtre (Tip 2)" data-en-title="Steel Filter (Type 2)"
+                 data-desc="Yüksek basınçlı istasyon girişleri için tasarlanmış, kartuş değişimi kolay, sızdırmaz kaynaklı ağır hizmet tipi filtre."
+                 data-en-desc="Heavy-duty filter with leak-proof welding, designed for high-pressure station inlets, featuring easy cartridge replacement."
+                 data-spec1="Basınç Segmenti:ANSI 300 / 600 Sınıfı" data-en-spec1="Pressure Segment:ANSI 300 / 600 Class"
+                 data-spec2="Hassasiyet Grubu:2 - 10 Mikron Element" data-en-spec2="Precision Group:2 - 10 Micron Element"
+                 data-spec3="Bağlantı Normu:ANSI Flanşlı Yapı" data-en-spec3="Connection Norm:ANSI Flanged Structure"
+                 data-spec4="Kaynak Kontrolü:%100 Radyografik Test" data-en-spec4="Welding Control:100% Radiographic Test">
+              <div class="product-media-box">
+                <span class="product-hud-badge" data-en="FILTER / TYPE 2">FİLTRE / TİP 2</span><div class="media-zoom-hint"><i class="lni lni-zoom-in"></i></div>
+                <img src="assets/img/products/celik-filtreler/tip2/1.jpeg" alt="Çelik Filtre Tip 2" />
+              </div>
+              <div class="nart-product-info"><h4 data-en="Steel Filter (Type 2)">Çelik Filtre (Tip 2)</h4><p data-en="Special industrial flanged cartridge filter line suitable for high pressure classes.">Yüksek basınç sınıflarına uygun, flanş bağlantılı özel endüstriyel kartuş filtre hattı.</p></div>
+            </div>
+          </div>
+
+          <!-- 3.1 Eşanjörler -->
+          <div class="col-lg-4 col-md-6 filter-item exchangers">
+            <div class="nart-product-card"
+                 data-title="Endüstriyel Eşanjörler" data-en-title="Industrial Heat Exchangers"
+                 data-desc="Yüksek basınç düşümü sırasında gaz genleşmesinden kaynaklanan donmaları engellemek amacıyla üretilen ısı değiştiriciler."
+                 data-en-desc="Heat exchangers manufactured to prevent freezing caused by gas expansion during high pressure drops."
+                 data-spec1="Eşanjör Tipi:Gövde-Boru (Shell & Tube)" data-en-spec1="Exchanger Type:Shell & Tube"
+                 data-spec2="Isı Kaynağı:Sıcak Su / Buhar" data-en-spec2="Heat Source:Hot Water / Steam"
+                 data-spec3="Termal Hesaplama:Projeye Özel Modelleme" data-en-spec3="Thermal Calculation:Project-Specific Modeling"
+                 data-spec4="Gövde Sızdırmazlık:Yüksek Mukavemetli Test" data-en-spec4="Shell Tightness:High Strength Leakage Test">
+              <div class="product-media-box">
+                <span class="product-hud-badge" data-en="HEAT EXCHANGER">EŞANJÖR</span><div class="media-zoom-hint"><i class="lni lni-zoom-in"></i></div>
+                <img src="assets/img/products/esanjorler/1.jpeg" alt="Eşanjörler" />
+              </div>
+              <div class="nart-product-info"><h4 data-en="Industrial Heat Exchangers">Endüstriyel Eşanjörler</h4><p data-en="Heat exchangers designed to prevent freezing that occurs during pressure drops.">Basınç düşümü esnasında meydana gelen donmaları önlemek amacıyla tasarlanan ısı değiştiriciler.</p></div>
+            </div>
+          </div>
+
+          <!-- 4.1 Regülatör - Domestik -->
+          <div class="col-lg-4 col-md-6 filter-item regulators">
+            <div class="nart-product-card"
+                 data-title="Domestik Regülatörler" data-en-title="Domestic Regulators"
+                 data-desc="Konut, site ve ticari binaların servis kutularında, gaz basıncını cihaz kullanım seviyesine güvenle indiren regülasyon elemanları."
+                 data-en-desc="Regulation elements that safely lower gas pressure to appliance usage levels in service boxes of residences, estates, and commercial buildings."
+                 data-spec1="Giriş Basınç Skalası:0.5 - 5 Bar" data-en-spec1="Inlet Pressure Scale:0.5 - 5 Bar"
+                 data-spec2="Çıkış Set Ayarı:21 - 50 mbar" data-en-spec2="Outlet Set Adjustment:21 - 50 mbar"
+                 data-spec3="Nominal Çap:DN25 - DN32 / Dişli" data-en-spec3="Nominal Diameter:DN25 - DN32 / Threaded"
+                 data-spec4="Emniyet Entegrasyonu:Emniyet Kapatmalı (UPS)" data-en-spec4="Safety Integration:With Safety Shut-Off (UPS)">
+              <div class="product-media-box">
+                <span class="product-hud-badge" data-en="REGULATOR / DOMESTIC">REGÜLATÖR / DOMESTİK</span><div class="media-zoom-hint"><i class="lni lni-zoom-in"></i></div>
+                <img src="assets/img/products/regulatorler/domestik/1.jpeg" alt="Domestik Regülatör" />
+              </div>
+              <div class="nart-product-info"><h4 data-en="Domestic Regulators">Domestik Regülatörler</h4><p data-en="Elements that lower gas pressure to a safe usage level in residential and commercial infrastructures.">Bina ve evsel altyapılarda gaz basınç değerini güvenli kullanım seviyesine düşüren elemanlar.</p></div>
+            </div>
+          </div>
+
+          <!-- 4.2 Regülatör - Endüstriyel -->
+          <div class="col-lg-4 col-md-6 filter-item regulators">
+            <div class="nart-product-card"
+                 data-title="Endüstriyel Regülatörler" data-en-title="Industrial Regulators"
+                 data-desc="Büyük debili endüstriyel yakıcılar, fırınlar ve fabrikaların ana giriş şebekeleri için ani tüketim değişimlerine tepki veren ağır hizmet tipi regülatörler."
+                 data-en-desc="Heavy-duty regulators reacting to sudden consumption changes for large-flow industrial burners, ovens, and main factory networks."
+                 data-spec1="Giriş Basınç Segmenti:1 - 19 Bar" data-en-spec1="Inlet Pressure Segment:1 - 19 Bar"
+                 data-spec2="Kapasite Sınıfı:Yüksek Debi Kontrolü" data-en-spec2="Capacity Class:High Flow Control"
+                 data-spec3="Emniyet Grubu:Slam-Shut + Emniyet Ventili" data-en-spec3="Safety Group:Slam-Shut + Relief Valve"
+                 data-spec4="Tasarım Normu:EN 334 Sertifikasyon" data-en-spec4="Design Norm:EN 334 Certification">
+              <div class="product-media-box">
+                <span class="product-hud-badge" data-en="REGULATOR / INDUSTRIAL">REGÜLATÖR / ENDÜSTRİYEL</span><div class="media-zoom-hint"><i class="lni lni-zoom-in"></i></div>
+                <img src="assets/img/products/regulatorler/endustriyel/1.jpeg" alt="Endüstriyel Regülatör" />
+              </div>
+              <div class="nart-product-info"><h4 data-en="Industrial Regulators">Endüstriyel Regülatörler</h4><p data-en="Heavy-duty equipment regulating high-flow gas infrastructure in factories and distribution networks.">Fabrika ve ana dağıtım şebekelerinde yüksek debili gaz akışını regüle eden ağır hizmet ekipmanları.</p></div>
+            </div>
+          </div>
+
+          <!-- 5.1 Küresel Vanalar -->
+          <div class="col-lg-4 col-md-6 filter-item valves">
+            <div class="nart-product-card"
+                 data-title="Kurumsal Küresel Vanalar" data-en-title="Corporate Ball Valves"
+                 data-desc="Doğalgaz boru hatlarında akışı hızlı ve tam sızdırmaz şekilde kesmek veya açmak için tasarlanmış, endüstriyel boru vanaları."
+                 data-en-desc="Industrial pipeline valves designed to quickly and tightly shut off or open gas flow in natural gas pipelines."
+                 data-spec1="Gövde Yapısı:Monoblok / 3 Parçalı Tam Geçiş" data-en-spec1="Body Structure:Monoblock / 3-Piece Full Bore"
+                 data-spec2="Sızdırmazlık Elemanı:PTFE / Metal-to-Metal" data-en-spec2="Sealing Element:PTFE / Metal-to-Metal"
+                 data-spec3="Basınç Kademesi:PN16 - PN100 / ANSI 150-600" data-en-spec3="Pressure Stage:PN16 - PN100 / ANSI 150-600"
+                 data-spec4="Kumanda Tipi:Manuel Kollu / Aktüatörlü" data-en-spec4="Control Type:Manual Lever / Actuated">
+              <div class="product-media-box">
+                <span class="product-hud-badge" data-en="VALVE / BALL">VANA / KÜRESEL</span><div class="media-zoom-hint"><i class="lni lni-zoom-in"></i></div>
+                <img src="assets/img/products/vanalar/kuresel-vanalar/1.jpeg" alt="Küresel Vanalar" />
+              </div>
+              <div class="nart-product-info"><h4 data-en="Corporate Ball Valves">Kurumsal Küresel Vanalar</h4><p data-en="High-pressure line isolating and opening valves featuring full sealing principle.">Tam sızdırmazlık prensibine sahip, yüksek basınçlı hat kesme ve açma vanaları.</p></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ======== Gelişmiş Teknik Detay Dökümantasyonlu Pop-up / Lightbox Modalı ======== -->
+    <div class="modal fade" id="nartLightbox" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content" style="background: #0f172a; border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; box-shadow: 0 30px 70px rgba(0,0,0,0.5);">
+          <div class="modal-header border-0 pe-4 pt-4 pb-0">
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Kapat"></button>
+          </div>
+          <div class="modal-body p-4 pt-0">
+            <div class="row align-items-center g-4">
+              <!-- Sol Bölme: Büyük Medya Gösterimi -->
+              <div class="col-lg-7 text-center">
+                <div id="lightboxMediaContent" class="rounded overflow-hidden shadow-lg" style="background: #090d16; border: 1px solid rgba(255,255,255,0.05); min-height: 350px; display: flex; align-items: center; justify-content: center;">
+                </div>
+              </div>
+              <!-- Sağ Bölme: Dökümantasyon Paneli -->
+              <div class="col-lg-5">
+                <div class="lightbox-info-panel h-100">
+                  <span class="badge mb-3" style="background: rgba(46, 204, 113, 0.15); color: #2ecc71; padding: 6px 14px; font-size: 12px; border-radius: 30px; font-weight: 600;" data-en="<i class='lni lni-checkmark-circle' style='margin-right: 5px;'></i> SYSTEM APPROVED / VERIFIED"><i class="lni lni-checkmark-circle" style="margin-right: 5px;"></i> SİSTEM ONAYLI / VERIFIED</span>
+                  <h3 id="lbTitle">Ürün Başlığı</h3>
+                  <span id="lbSub" class="tech-sub">// TECHNICAL_DATA_SHEET</span>
+
+                  <!-- Sistem Açıklama Kutusu -->
+                  <div class="lightbox-desc-box">
+                    <h5 data-en="<i class='lni lni-file'></i> System Analysis & Operation Summary"><i class="lni lni-file"></i> Sistem Analizi & İşleyiş Özeti</h5>
+                    <p id="lbDesc" class="tech-description">Ürün detaylı açıklaması.</p>
+                  </div>
+
+                  <!-- 4'lü Teknik Bilgi Izgarası -->
+                  <div class="row g-3 lightbox-spec-grid">
+                    <div class="col-sm-6"><div class="lightbox-spec-box"><i class="lni lni-dashboard"></i><span id="lbLabel1">Özellik 1</span><strong id="lbVal1">-</strong></div></div>
+                    <div class="col-sm-6"><div class="lightbox-spec-box"><i class="lni lni-timer"></i><span id="lbLabel2">Özellik 2</span><strong id="lbVal2">-</strong></div></div>
+                    <div class="col-sm-6"><div class="lightbox-spec-box"><i class="lni lni-shield"></i><span id="lbLabel3">Özellik 3</span><strong id="lbVal3">-</strong></div></div>
+                    <div class="col-sm-6"><div class="lightbox-spec-box"><i class="lni lni-certificate"></i><span id="lbLabel4">Özellik 4</span><strong id="lbVal4">-</strong></div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======== footer start ======== -->
+    <div id="nart-footer"></div>
+    <!-- ======== footer end ======== -->
+
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/wow.min.js"></script>
+    <script src="assets/js/main.js"></script>
+
+    <!-- ======== Akıllı Filtreleme ve Dil Duyarlı Pop-up Motoru ======== -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        // 1. JavaScript Filtreleme Motoru
+        const filterButtons = document.querySelectorAll(".nart-filter-btn");
+        const filterItems = document.querySelectorAll(".filter-item");
+
+        filterButtons.forEach(btn => {
+          btn.addEventListener("click", function() {
+            filterButtons.forEach(b => b.classList.remove("active"));
+            this.classList.add("active");
+
+            const targetFilter = this.getAttribute("data-filter");
+
+            filterItems.forEach(item => {
+              if (targetFilter === "all" || item.classList.contains(targetFilter)) {
+                item.style.display = "block";
+                setTimeout(() => { item.style.opacity = "1"; item.style.transform = "scale(1)"; }, 50);
+              } else {
+                item.style.opacity = "0";
+                item.style.transform = "scale(0.92)";
+                setTimeout(() => { item.style.display = "none"; }, 400);
+              }
+            });
+          });
+        });
+
+        // 2. Albüm Destekli Teknik Pop-up (Lightbox) Motoru
+        const lightboxModal = new bootstrap.Modal(document.getElementById('nartLightbox'));
+        const mediaContainer = document.getElementById('lightboxMediaContent');
+
+        const lbTitle = document.getElementById('lbTitle');
+        const lbDesc = document.getElementById('lbDesc');
+        const lbSub = document.getElementById('lbSub');
+
+        const labels = [
+          document.getElementById('lbLabel1'), document.getElementById('lbLabel2'),
+          document.getElementById('lbLabel3'), document.getElementById('lbLabel4')
+        ];
+        const vals = [
+          document.getElementById('lbVal1'), document.getElementById('lbVal2'),
+          document.getElementById('lbVal3'), document.getElementById('lbVal4')
+        ];
+
+        document.querySelectorAll('.product-media-box').forEach(box => {
+          box.addEventListener('click', function(e) {
+            if(e.target.closest('.carousel-control-prev') || e.target.closest('.carousel-control-next')) return;
+
+            mediaContainer.innerHTML = '';
+            const card = this.closest('.nart-product-card');
+
+            // 🌐 KRİTİK ÇOK DİLLİ OKUMA MANTIĞI: Seçilen dile göre doğru nitelikleri eşleştir
+            const currentLang = localStorage.getItem('nart_secilen_dil') || 'tr';
+            const titleAttr = currentLang === 'en' ? 'data-en-title' : 'data-title';
+            const descAttr = currentLang === 'en' ? 'data-en-desc' : 'data-desc';
+
+            const title = card.getAttribute(titleAttr) || card.getAttribute('data-title') || "Nart Gaz Sistem Modülü";
+            const desc = card.getAttribute(descAttr) || card.getAttribute('data-desc') || "Teknik konfigürasyon veri dökümanı.";
+            const hudBadge = card.querySelector('.product-hud-badge')?.textContent || "PRODUCT";
+
+            lbTitle.textContent = title;
+            lbDesc.textContent = desc;
+            lbSub.textContent = `// SYS_SPECIFICATION: ${hudBadge.replace(/[^a-zA-Z0-9]/g, '_')}_DATA_SHEET`;
+
+            for(let i=1; i<=4; i++) {
+              const specAttr = currentLang === 'en' ? `data-en-spec${i}` : `data-spec${i}`;
+              const specRaw = card.getAttribute(specAttr) || card.getAttribute(`data-spec${i}`);
+
+              if(specRaw && specRaw.includes(':')) {
+                const parts = specRaw.split(':');
+                labels[i-1].textContent = parts[0];
+                vals[i-1].textContent = parts[1];
+              } else {
+                labels[i-1].textContent = currentLang === 'en' ? `Parameter 0${i}` : `Parametre 0${i}`;
+                vals[i-1].textContent = currentLang === 'en' ? "Standard Configuration" : "Standart Konfigürasyon";
+              }
+            }
+
+            const originalCarousel = this.querySelector('.carousel');
+            if (originalCarousel) {
+              const activeItem = originalCarousel.querySelector('.carousel-item.active');
+              const items = Array.from(originalCarousel.querySelectorAll('.carousel-item'));
+              let activeIndex = items.indexOf(activeItem);
+              if(activeIndex === -1) activeIndex = 0;
+
+              const clonedCarousel = originalCarousel.cloneNode(true);
+              clonedCarousel.id = "lightboxDynamicCarousel";
+
+              const prevBtn = clonedCarousel.querySelector('.carousel-control-prev');
+              const nextBtn = clonedCarousel.querySelector('.carousel-control-next');
+              if(prevBtn) prevBtn.setAttribute('data-bs-target', '#lightboxDynamicCarousel');
+              if(nextBtn) nextBtn.setAttribute('data-bs-target', '#lightboxDynamicCarousel');
+
+              mediaContainer.appendChild(clonedCarousel);
+
+              const bsCarousel = new bootstrap.Carousel(clonedCarousel, { interval: false });
+              bsCarousel.to(activeIndex);
+
+              const initialVideo = clonedCarousel.querySelectorAll('.carousel-item')[activeIndex].querySelector('video');
+              if (initialVideo) {
+                initialVideo.controls = true;
+                setTimeout(() => { initialVideo.play().catch(e => console.log("Oynatma engeli:", e)); }, 150);
+              }
+
+              clonedCarousel.addEventListener('slid.bs.carousel', function (e) {
+                clonedCarousel.querySelectorAll('video').forEach(v => v.pause());
+                const currentVideo = e.relatedTarget.querySelector('video');
+                if (currentVideo) {
+                  currentVideo.controls = true;
+                  currentVideo.play().catch(err => console.log("Oynatma engeli:", err));
+                }
+              });
+            } else {
+              const targetMedia = this.querySelector('img, video');
+              if (targetMedia) {
+                if (targetMedia.tagName === 'IMG') {
+                  const img = document.createElement('img');
+                  img.src = targetMedia.src;
+                  img.className = 'img-fluid rounded';
+                  img.style.maxHeight = '65vh';
+                  img.style.objectFit = 'contain';
+                  mediaContainer.appendChild(img);
+                } else if (targetMedia.tagName === 'VIDEO') {
+                  const video = document.createElement('video');
+                  video.src = targetMedia.src;
+                  video.controls = true;
+                  video.autoplay = true;
+                  video.className = 'w-100 rounded';
+                  video.style.maxHeight = '65vh';
+                  mediaContainer.appendChild(video);
+                }
+              }
+            }
+
+            lightboxModal.show();
+          });
+        });
+
+        document.getElementById('nartLightbox').addEventListener('hidden.bs.modal', function () {
+          mediaContainer.innerHTML = '';
+        });
+      });
+    </script>
+  </body>
+</html>
