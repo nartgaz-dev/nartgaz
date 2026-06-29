@@ -106,52 +106,129 @@
     </section>
 
     <!-- ======== Detaylı Ürün Sunumu Gözdesi ======== -->
-    <section class="product-details-section pt-100 pb-120">
-      <div class="container">
-        <div class="row g-5 align-items-center">
+    <!-- =========================================================================
+         ORTAK ÜRÜN DETAY ŞABLONU (TÜM ÜRÜNLER İÇİN STANDART)
+         ========================================================================= -->
+    <section class="product-detail-page">
+        <div class="product-container">
 
-          <!-- SOL BÖLME: Çoklu Fotoğraf ve Canlı Video Slayt Motoru -->
-          <div class="col-lg-7">
-            <div class="nart-detail-media-wrapper wow fadeInLeft" data-wow-delay=".3s">
-              <div id="nartDetailCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="false">
-                <div class="carousel-inner">
-                  <div class="carousel-item active"><img src="../assets/img/products/istasyonlar/RMS-istasyonlari/RMS-B-istasyonu/5000-m3h-RMS-B-istasyonu/1.jpeg" alt="RMS-B Detay 1"></div>
-                  <div class="carousel-item"><img src="../assets/img/products/istasyonlar/RMS-istasyonlari/RMS-B-istasyonu/5000-m3h-RMS-B-istasyonu/2.jpeg" alt="RMS-B Detay 2"></div>
-                  <div class="carousel-item"><img src="../assets/img/products/istasyonlar/RMS-istasyonlari/RMS-B-istasyonu/5000-m3h-RMS-B-istasyonu/16.jpeg" alt="RMS-B Detay 3"></div>
-                  <div class="carousel-item"><video src="../assets/img/products/istasyonlar/RMS-istasyonlari/RMS-B-istasyonu/5000-m3h-RMS-B-istasyonu/18-rms-b.mp4" controls muted class="w-100 h-100"></video></div>
-                  <div class="carousel-item"><video src="../assets/img/products/istasyonlar/RMS-istasyonlari/RMS-B-istasyonu/5000-m3h-RMS-B-istasyonu/19-rms-b.mp4" controls muted class="w-100 h-100"></video></div>
-                  <div class="carousel-item"><video src="../assets/img/products/istasyonlar/RMS-istasyonlari/RMS-B-istasyonu/5000-m3h-RMS-B-istasyonu/20-rms-b.mp4" controls muted class="w-100 h-100"></video></div>
+            <!-- 1. SIRA: ALT BAŞLIK VE GİRİŞ ALANI (HİYERARŞİK DÜZEN) -->
+            <div class="product-main-header">
+                <span class="product-category-badge">Ürün Detayları &amp; Kapsam</span>
+                <h2>RMS-B Tipi Basınç Düşürme ve Ölçüm İstasyonu Genel Özellikleri</h2>
+                <p class="product-lead-text">Yüksek debili endüstriyel tesisler için hassas regülasyon, maksimum emniyet ve kayıpsız telemetrik ölçüm teknolojisi.</p>
+            </div>
+
+            <!-- 2. SIRA: GÖRSEL ALANI -->
+            <div class="product-image-container">
+                <img src="/assets/img/products/istasyonlar/RMS-istasyonlari/RMS-B-istasyonu/5000-m3h-RMS-B-istasyonu/17.jpeg" alt="Ürün Görseli" class="product-featured-img">
+            </div>
+
+            <!-- 3. SIRA: TEKNİK DETAYLAR -->
+            <div class="product-info-row">
+                <h2 class="product-section-title">Teknik Detaylar</h2>
+                <div class="product-grid-2">
+                    <div class="product-description">
+                        <p>RMS-B tipi istasyonlarımız, endüstriyel tüketicilerin anlık gaz ihtiyaçlarını en kritik dalgalanmalarda bile sıfır hata ile karşılamak üzere tasarlanmıştır. Çift hatlı (1 Asıl + 1 Yedek) mimarisi sayesinde kesintisiz gaz akışı garanti altına alınır.</p>
+                    </div>
+                    <div class="product-spec-list">
+                        <ul>
+                            <li><strong>Kapasite Aralığı:</strong> 100 m³/h - 10.000 m³/h (Özel tasarım opsiyonlu)</li>
+                            <li><strong>İstasyon Mimarisi:</strong> 1 Asıl + 1 Yedek (Twin Line System)</li>
+                            <li><strong>Filtreleme Hassasiyeti:</strong> G2.5 / G4 Kartuş Filtre ile 5 mikrona kadar tam filtrasyon</li>
+                            <li><strong>Sayaç Teknolojisi:</strong> Hassas Türbinli veya Rotary Sayaç entegrasyonu</li>
+                            <li><strong>Emniyet Sistemi:</strong> SSV (Slam-Shut Valve) aşırı/düşük basınç koruma kapatması</li>
+                        </ul>
+                    </div>
                 </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#nartDetailCarousel" data-bs-slide="prev"><span class="carousel-control-prev-icon"></span></button>
-                <button class="carousel-control-next" type="button" data-bs-target="#nartDetailCarousel" data-bs-slide="next"><span class="carousel-control-next-icon"></span></button>
-              </div>
             </div>
-          </div>
 
-          <!-- SAĞ BÖLME: Lüks Endüstriyel HUD Teknik Bilgi Paneli -->
-          <div class="col-lg-5">
-            <div class="nart-detail-panel wow fadeInRight" data-wow-delay=".4s">
-              <span class="badge mb-3" style="background: rgba(46, 204, 113, 0.15); color: #2ecc71; padding: 6px 14px; font-size: 12px; border-radius: 30px; font-weight: 600;" data-en="<i class='lni lni-checkmark-circle' style='margin-right: 5px;'></i> CERTIFIED STATION"><i class="lni lni-checkmark-circle" style="margin-right: 5px;"></i> SİSTEM ONAYLI / CERTIFIED</span>
-              <h2 data-en="5000 m³/h RMS-B Station">5000 m³/h RMS-B İstasyonu</h2>
-              <span class="tech-sub">// TECHNICAL_DATA_SHEET</span>
-
-              <div class="nart-detail-desc-box">
-                <h5 data-en="<i class='lni lni-file'></i> System Analysis & Operation"><i class="lni lni-file"></i> Sistem Analizi & İşleyiş Özeti</h5>
-                <p data-en="City network distribution and large-scale industrial production facilities protection and distribution center fully compatible with İGDAŞ standards. Manufactured with certified high-precision welding methods.">İGDAŞ standartlarına tam uyumlu, şehir şebeke dağıtım ve büyük ölçekli endüstriyel üretim tesisleri koruma ve dağıtım merkezi. Sertifikalı yüksek hassasiyetli kaynak metotları ile imal edilmiştir.</p>
-              </div>
-
-              <!-- 4'lü Teknik Parametre Izgarası -->
-              <div class="row g-3">
-                <div class="col-sm-6"><div class="nart-detail-spec-box"><i class="lni lni-dashboard"></i><span data-en="Nominal Flow">Nominal Debi</span><strong>5000 m³/h</strong></div></div>
-                <div class="col-sm-6"><div class="nart-detail-spec-box"><i class="lni lni-timer"></i><span data-en="Inlet Pressure">Giriş Basıncı</span><strong>6 - 19 Bar</strong></div></div>
-                <div class="col-sm-6"><div class="nart-detail-spec-box"><i class="lni lni-shield"></i><span data-en="Outlet Pressure">Çıkış Basıncı</span><strong>1 - 4 Bar</strong></div></div>
-                <div class="col-sm-6"><div class="nart-detail-spec-box"><i class="lni lni-certificate"></i><span data-en="Approval">Resmi Onay</span><strong data-en="İGDAŞ Certified">İGDAŞ Sertifikalı</strong></div></div>
-              </div>
+            <!-- 4. SIRA: KULLANIM ALANLARI -->
+            <div class="product-info-row">
+                <h2 class="product-section-title">Kullanım Alanları</h2>
+                <div class="product-grid-4">
+                    <div class="product-feature-card">
+                        <div class="product-card-icon">🏭</div>
+                        <h3>Ağır Sanayi Tesisleri</h3>
+                        <p>Demir-çelik, çimento ve cam fabrikaları gibi yüksek hacimli anlık gaz tüketen fırın hatları.</p>
+                    </div>
+                    <div class="product-feature-card">
+                        <div class="product-card-icon">⚡</div>
+                        <h3>Enerji Santralleri</h3>
+                        <p>Doğalgaz kombine çevrim ve kojenerasyon elektrik üretim tesislerinin besleme hatları.</p>
+                    </div>
+                    <div class="product-feature-card">
+                        <div class="product-card-icon">🏢</div>
+                        <h3>OSB Dağıtım Merkezleri</h3>
+                        <p>Organize Sanayi Bölgelerinin ana girişlerinde bölge regülasyon istasyonu olarak görev yapar.</p>
+                    </div>
+                    <div class="product-feature-card">
+                        <div class="product-card-icon">🔥</div>
+                        <h3>Büyük Ticari İşletmeler</h3>
+                        <p>Alışveriş merkezleri, hastaneler ve büyük döküm atölyelerinin merkezi proses hatları.</p>
+                    </div>
+                </div>
             </div>
-          </div>
+
+            <!-- 5. SIRA: STANDARTLAR -->
+            <div class="product-info-row">
+                <h2 class="product-section-title">Hangi Standartlar?</h2>
+                <div class="product-standards-grid">
+                    <div class="product-std-item">
+                        <span class="product-std-code">EN 12186</span>
+                        <p>Gaz Tedarik Sistemleri - Gaz basınç düşürme istasyonları - Fonksiyonel gereksinimler standardına tam uyum.</p>
+                    </div>
+                    <div class="product-std-item">
+                        <span class="product-std-code">EN 12279</span>
+                        <p>Giriş basıncı 100 bar'a kadar olan gaz regülasyon tesisleri emniyet ve tasarım kriterleri.</p>
+                    </div>
+                    <div class="product-std-item">
+                        <span class="product-std-code">2014/68/EU</span>
+                        <p>Avrupa Birliği Basınçlı Ekipmanlar Direktifi'ne (PED) uygun kaynak, test ve malzeme sertifikasyonu.</p>
+                    </div>
+                    <div class="product-std-item">
+                        <span class="product-std-code">TS 11672</span>
+                        <p>Türk Standartları Enstitüsü Doğalgaz Basınç Düşürme ve Ölçüm İstasyonları imalat yeterliliği.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6. SIRA: BASINÇ SINIFI -->
+            <div class="product-info-row">
+                <h2 class="product-section-title">Basınç Sınıfı Değerleri</h2>
+                <p class="product-row-desc">İstasyonlarımız, giriş şebekesindeki agresif yüksek basıncı, tesis içi güvenli çalışma basıncına mükemmel bir kararlılıkla indirger.</p>
+
+                <div class="product-table-responsive">
+                    <table class="product-data-table">
+                        <thead>
+                            <tr>
+                                <th>İstasyon Bölümü</th>
+                                <th>Flanş &amp; Gövde Dayanımı (Nominal)</th>
+                                <th>Operasyonel Basınç Aralığı (Bar)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Giriş Hattı (Inlet)</strong></td>
+                                <td><span class="product-table-tag tag-orange">ANSI Class 150 / 300 (PN16 / PN40)</span></td>
+                                <td><strong>6 Bar — 19.5 Bar</strong> (Yüksek Basınç Segmenti)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Çıkış Hattı (Outlet)</strong></td>
+                                <td><span class="product-table-tag tag-blue">PN16 / PN25</span></td>
+                                <td><strong>1 Bar — 4 Bar</strong> (Güvenli Endüstriyel Dağıtım)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Dizayn Basıncı (DP)</strong></td>
+                                <td><span class="product-table-tag tag-dark">Maksimum Gövde Limiti</span></td>
+                                <td><strong>25 Bar</strong> tam sızdırmazlık test sınırı</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
         </div>
-      </div>
     </section>
 
     <!-- ======== footer start ======== -->

@@ -2775,3 +2775,184 @@ p {
   box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15); /* Derinlik hissi veren lüks gölge */
   border: 1px solid rgba(255, 255, 255, 0.1); /* İnce şık bir çerçeve */
 }
+
+/* =========================================================================
+   NART GAZ - GENEL ÜRÜN DETAY SAYFALARI ORTAK STİL SİSTEMİ
+   ========================================================================= */
+.product-detail-page {
+    padding: 70px 0;
+    background-color: #ffffff;
+    color: #0f172a;
+}
+
+.product-container {
+    width: 100%;
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* 1. Başlık Düzeni */
+.product-main-header {
+    text-align: center;
+    margin-bottom: 45px;
+}
+.product-category-badge {
+    background-color: rgba(2, 132, 199, 0.08);
+    color: #0284c7;
+    padding: 6px 14px;
+    border-radius: 30px;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+/* Başlık Hiyerarşisi Düzenlemesi */
+.product-main-header h2 {
+    font-size: 26px;
+    color: #0f172a; /* Çok patlamayan, kurumsal koyu gri/lacivert tonu */
+    margin: 12px 0 10px 0;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+}
+
+/* Sayfa içindeki diğer alt başlıkların (Teknik Detaylar vb.)
+   birbiriyle çakışmaması için onları da bir tık optimize edelim: */
+.product-section-title {
+    font-size: 22px;
+    color: #020617;
+    margin-bottom: 25px;
+    font-weight: 600;
+}
+
+.product-lead-text {
+    font-size: 17px;
+    color: #475569;
+    max-width: 750px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* 2. Resim Düzeni */
+.product-image-container {
+    width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 50px;
+    box-shadow: 0 15px 35px rgba(15, 23, 42, 0.06);
+}
+.product-featured-img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Genel Bölüm Blokları */
+.product-info-row {
+    margin-bottom: 60px;
+    border-top: 1px solid #e2e8f0;
+    padding-top: 45px;
+}
+.product-section-title {
+    font-size: 26px;
+    color: #020617;
+    margin-bottom: 25px;
+    font-weight: 600;
+}
+
+/* Esnek Grid Sistemleri */
+.product-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+.product-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+
+/* 3. Teknik Özellikler Listesi */
+.product-description { font-size: 15px; color: #334155; line-height: 1.7; }
+.product-spec-list ul { list-style: none; padding: 0; margin: 0; }
+.product-spec-list li {
+    padding: 10px 0;
+    border-bottom: 1px solid #f1f5f9;
+    color: #334155;
+    font-size: 14.5px;
+}
+.product-spec-list li strong { color: #020617; width: 160px; display: inline-block; }
+
+/* 4. Özellik Kartları (Kullanım Alanları) */
+.product-feature-card {
+    background: #f8fafc;
+    padding: 25px 20px;
+    border-radius: 10px;
+    border: 1px solid #e2e8f0;
+    transition: all 0.25s ease;
+}
+.product-feature-card:hover {
+    transform: translateY(-4px);
+    border-color: #0284c7;
+    background: #ffffff;
+    box-shadow: 0 12px 24px rgba(0,0,0,0.04);
+}
+.product-card-icon { font-size: 28px; margin-bottom: 12px; }
+.product-feature-card h3 { font-size: 17px; margin-bottom: 8px; color: #020617; font-weight: 600; }
+.product-feature-card p { font-size: 13.5px; color: #475569; line-height: 1.5; margin: 0; }
+
+/* 5. Standartlar Düzeni */
+.product-standards-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.product-std-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    background: #ffffff;
+    padding: 18px;
+    border-radius: 8px;
+    border-left: 4px solid #0284c7;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.01);
+}
+.product-std-code {
+    background: #0f172a;
+    color: #ffffff;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    white-space: nowrap;
+}
+.product-std-item p { margin: 0; font-size: 13.5px; color: #334155; line-height: 1.5; }
+
+/* 6. Basınç Sınıfı Tablo Düzeni */
+.product-row-desc { color: #475569; margin-bottom: 20px; font-size: 15px; }
+.product-table-responsive {
+    overflow-x: auto;
+    border-radius: 6px;
+    border: 1px solid #e2e8f0;
+}
+.product-data-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 14.5px;
+}
+.product-data-table th, .product-data-table td { padding: 14px 18px; }
+.product-data-table th { background: #0f172a; color: #ffffff; font-weight: 600; }
+.product-data-table tbody tr { border-bottom: 1px solid #e2e8f0; }
+.product-data-table tbody tr:last-child { border-bottom: none; }
+.product-data-table tbody tr:nth-child(even) { background: #f8fafc; }
+
+.product-table-tag {
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 11.5px;
+    font-weight: 600;
+}
+.tag-orange { background: rgba(249, 115, 22, 0.08); color: #ea580c; }
+.badge-blue { background: rgba(2, 132, 199, 0.08); color: #0284c7; }
+.tag-dark { background: #e2e8f0; color: #334155; }
+
+/* Mobil ve Tablet Uyumluluk Kriterleri (Responsive) */
+@media (max-width: 991px) {
+    .product-grid-4 { grid-template-columns: 1fr 1fr; }
+    .product-standards-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 767px) {
+    .product-grid-2 { grid-template-columns: 1fr; gap: 20px; }
+    .product-grid-4 { grid-template-columns: 1fr; }
+    .product-main-header h1 { font-size: 28px; }
+}
+
